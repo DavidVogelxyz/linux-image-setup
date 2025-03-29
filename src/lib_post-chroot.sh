@@ -247,6 +247,8 @@ do_basic_adjustments() {
         && arch_pacman_color \
         && arch_makepkg_conf \
         && arch_aur_install
+
+    return 0
 }
 
 setup_locale() {
@@ -398,7 +400,8 @@ fstab_entry_add_swap_uuid() {
                     grep_result=$?
                     [ "${grep_result}" == 0 ] && uuid_item="$(echo "$blkid_uuid" | sed -E "s/\"|\"$//g")"
                     sed -i "s|$object|$uuid_item|g" /etc/fstab
-                }
+                } \
+                || return 0
         done
     done < "/etc/fstab-helper"
 
@@ -438,7 +441,8 @@ run_fstab_debootstrap() {
                     grep_result=$?
                     [ "${grep_result}" == 0 ] && uuid_item="$(echo "$blkid_uuid" | sed -E "s/\"|\"$//g")"
                     sed -i "s|$object|$uuid_item|g" /etc/fstab
-                }
+                } \
+                || return 0
         done
     done< <(blkid | grep UUID | sed '/^\/dev\/sr0/d')
 }
@@ -625,8 +629,10 @@ doconfigs() {
         }
 
     [ "$swapanswer" = true ] \
-        && check_install_os "arch" \
-        || check_install_os "artix" \
+        && {
+            check_install_os "arch" \
+                || check_install_os "artix"
+        } \
         && run_fstab_arch
 
     return 0
@@ -732,11 +738,13 @@ do_initramfs_update() {
     check_install_os "debian" \
         || check_install_os "ubuntu" \
         && update-initramfs -u -k all \
-        > /dev/null 2>&1
+        > /dev/null 2>&1 \
+        && return 0
 
     check_install_os "arch" \
         || check_install_os "artix" \
-        && mkinitcpio -p linux
+        && mkinitcpio -p linux \
+        && return 0
 }
 
 run_grub-install() {
@@ -749,7 +757,7 @@ run_grub-install() {
             check_install_os "debian" \
                 || check_install_os "ubuntu"
         } \
-        && install_pkg grub-pc
+        && install_pkg_apt grub-pc
 
     [[ $uefi = "bios" ]] \
         && grub-install \
@@ -762,7 +770,7 @@ run_grub-install() {
             check_install_os "debian" \
                 || check_install_os "ubuntu"
         } \
-        && install_pkg grub-efi
+        && install_pkg_apt grub-efi
 
     [[ $uefi = "uefi" ]] \
         && grub-install \
