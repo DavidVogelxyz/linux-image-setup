@@ -3,9 +3,9 @@
 aurhelper="yay"
 export TERM=ansi
 
-####################################################################
+#####################################################################
 # NEW FUNCTIONS
-####################################################################
+#####################################################################
 
 # check if timezone is symlink
 check_path_link() {
@@ -106,6 +106,28 @@ arch_pacman_color() {
     sed -Ei "s/^#(ParallelDownloads).*/\1 = 5/;/^#Color$/s/#//" /etc/pacman.conf
 }
 
+arch_add_arch_mirror() {
+    check_install_os "arch" \
+        && {
+            install_pkg_pacman archlinux-keyring
+        } \
+        && return 0
+
+    check_install_os "artix" \
+        && {
+            install_pkg_pacman artix-keyring
+            install_pkg_pacman artix-archlinux-support
+            grep -q "^\[extra\]" /etc/pacman.conf \
+                || echo "
+[extra]
+Include = /etc/pacman.d/mirrorlist-arch" \
+                >>/etc/pacman.conf
+            pacman -Syy --noconfirm >/dev/null 2>&1
+            pacman-key --populate archlinux >/dev/null 2>&1
+        } \
+        && return 0
+}
+
 arch_makepkg_conf() {
     # Use all cores for compilation.
     sed -i "s/-j2/-j$(nproc)/;/^#MAKEFLAGS/s/^#//" /etc/makepkg.conf
@@ -153,9 +175,9 @@ arch_aur_install() {
     $aurhelper -Y --save --devel
 }
 
-####################################################################
+#####################################################################
 # FUNCTIONS - CHECK_INSTALL_OS
-####################################################################
+#####################################################################
 
 check_install_os() {
     [ "$install_os_selected" == "$1" ]
@@ -171,24 +193,24 @@ check_pkgmgr_pacman() {
         || check_install_os "artix"
 }
 
-####################################################################
+#####################################################################
 # VARIABLES - DEBIAN-SETUP
-####################################################################
+#####################################################################
 
 list_packages="https://raw.githubusercontent.com/DavidVogelxyz/debian-setup/master/packages.csv"
 
-####################################################################
+#####################################################################
 # FUNCTIONS - DEBIAN-SETUP
-####################################################################
+#####################################################################
 
 error() {
     echo "$1" >&2 \
         && exit 1
 }
 
-####################################################################
+#####################################################################
 # FUNCTIONS - DEBIAN-SETUP - ADD_USER_AND_PASS
-####################################################################
+#####################################################################
 
 add_user_and_pass() {
     whiptail \
@@ -220,9 +242,9 @@ add_user_and_pass() {
     chown -R "$username": "$(dirname "$repodir")"
 }
 
-####################################################################
+#####################################################################
 # FUNCTIONS - DEBIAN-SETUP - DO_BASIC_ADJUSTMENTS
-####################################################################
+#####################################################################
 
 do_basic_adjustments() {
     whiptail \
@@ -251,6 +273,7 @@ do_basic_adjustments() {
     check_pkgmgr_pacman \
         && arch_aur_prep \
         && arch_pacman_color \
+        && arch_add_arch_mirror \
         && arch_makepkg_conf \
         && arch_aur_install
 
@@ -374,7 +397,7 @@ create_useful_directories() {
     mkdir -p \
         "/home/$username/.cache/bash" \
         "/home/$username/.cache/zsh" \
-        "/home/$username/.local/bin" \
+        "/home/$username/.local/bin/statusbar" \
         /root/.cache/bash \
         /root/.cache/zsh \
         /root/.config/lf \
@@ -780,9 +803,9 @@ final_message() {
     clear
 }
 
-####################################################################
+#####################################################################
 # ACTUAL SCRIPT - PLAYBOOK_POST_CHROOT
-####################################################################
+#####################################################################
 
 playbook_post_chroot() {
     echo "Updating packages, one moment..."
