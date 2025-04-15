@@ -550,6 +550,12 @@ doconfigs() {
     # installs the vim plugins
     vimplugininstall
 
+    # if no `nvim`, change the default editor
+    [ -x "$(command -v nvim)" ] \
+        || sed -i \
+            's/^export EDITOR="nvim"/export EDITOR="vim"/g' \
+            "/home/$username/.dotfiles/.config/shell/profile"
+
     return 0
 }
 
