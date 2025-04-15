@@ -217,6 +217,20 @@ larbs_fixes() {
     EndSection' >/etc/X11/xorg.conf.d/40-libinput.conf
 }
 
+fix_browser_dwm() {
+    # if browser is set to Brave, change default editor
+    [ "$browser_install" = "brave" ] \
+        && sed -i \
+            's/^export BROWSER="librewolf"/export BROWSER="brave-bin"/g' \
+            "/home/$username/.dotfiles/.config/shell/profile"
+
+    # if browser is set to Firefox, change default editor
+    [ "$browser_install" = "firefox" ] \
+        && sed -i \
+            's/^export BROWSER="librewolf"/export BROWSER="firefox-esr"/g' \
+            "/home/$username/.dotfiles/.config/shell/profile"
+}
+
 makeuserjs(){
     # Get the Arkenfox user.js and prepare it.
     arkenfox="$pdir/arkenfox.js"
@@ -266,6 +280,8 @@ fix_dwm() {
 
     check_pkgmgr_pacman \
         || install_browser
+
+    fix_browser_dwm
 
     check_pkgmgr_pacman \
         && fix_librewolf
