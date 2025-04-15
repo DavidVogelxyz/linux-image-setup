@@ -180,4 +180,6 @@ fix_dwm() {
     fix_dwm_wallpaper
 
     enable_dwm_autologin
+
+    install_browser
 }
