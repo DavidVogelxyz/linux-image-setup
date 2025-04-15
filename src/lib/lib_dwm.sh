@@ -172,6 +172,15 @@ EOF
     return 0
 }
 
+nvimplugininstall() {
+	# Installs neovim plugins.
+	whiptail --infobox "Installing neovim plugins..." 7 60
+	mkdir -p "/home/$name/.config/nvim/autoload"
+	curl -Ls "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" >  "/home/$name/.config/nvim/autoload/plug.vim"
+	chown -R "$name:wheel" "/home/$name/.config/nvim"
+	sudo -u "$name" nvim -c "PlugInstall|q|q"
+}
+
 fix_dwm() {
     fix_dwm_existing_dotfiles
 
@@ -181,5 +190,10 @@ fix_dwm() {
 
     enable_dwm_autologin
 
+    check_pkgmgr_pacman \
+        && nvimplugininstall
+
     install_browser
+
+    return 0
 }
