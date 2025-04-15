@@ -535,6 +535,10 @@ doconfigs() {
         && check_pkgmgr_pacman \
         && run_fstab_arch
 
+    # set up sshd, if not a server
+    [ "$graphical_environment" != "server" ] \
+        && template_replace src/templates/etc/ssh/sshd_config /etc/ssh/sshd_config
+
     return 0
 }
 
