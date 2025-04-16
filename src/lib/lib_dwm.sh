@@ -245,7 +245,9 @@ makeuserjs(){
 fix_librewolf() {
     # All this below to get Librewolf installed with add-ons and non-bad settings.
 
-    whiptail --infobox "Setting \`LibreWolf\` browser privacy settings and add-ons..." 7 60
+    whiptail \
+        --infobox "Setting \`LibreWolf\` browser privacy settings and add-ons..." \
+        9 70
 
     browserdir="/home/$username/.librewolf"
     profilesini="$browserdir/profiles.ini"
