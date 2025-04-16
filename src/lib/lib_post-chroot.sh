@@ -669,21 +669,21 @@ run_grub-install() {
         --infobox "Installing and updating GRUB..." \
         9 70
 
-    [[ $uefi = "bios" ]] \
+    [ "$uefi" = "bios" ] \
         && check_pkgmgr_apt \
         && install_pkg_apt grub-pc
 
-    [[ $uefi = "uefi" ]] \
+    [ "$uefi" = "uefi" ] \
         && check_pkgmgr_apt \
         && install_pkg_apt grub-efi
 
-    [[ $uefi = "bios" ]] \
+    [ "$uefi" = "bios" ] \
         && grub-install \
             --target=i386-pc \
             "/dev/$disk_selected" \
             > /dev/null 2>&1
 
-    [[ $uefi = "uefi" ]] \
+    [ "$uefi" = "uefi" ] \
         && grub-install \
             --target=x86_64-efi \
             --efi-directory=/boot \
