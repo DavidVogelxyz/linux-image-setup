@@ -293,7 +293,7 @@ get_encryption_pass() {
          --title "Encryption Password" \
          --passwordbox "\\nPlease enter a password to unlock the encrypted drive." \
         --nocancel \
-        25 78 \
+        10 60 \
         3>&1 1>&2 2>&3 3>&1
     )
 
@@ -301,7 +301,7 @@ get_encryption_pass() {
         --title "Encryption Password" \
         --passwordbox "\\nPlease retype the password to unlock the encrypted drive." \
         --nocancel \
-        25 78 \
+        10 60 \
         3>&1 1>&2 2>&3 3>&1
     )
 
@@ -311,7 +311,7 @@ get_encryption_pass() {
             --passwordbox "\\nThe passwords entered do not match each other, or were left blank.
                 \\nPlease enter a password to unlock the encrypted drive." \
             --nocancel \
-            25 78 \
+            10 60 \
             3>&1 1>&2 2>&3 3>&1
         )
 
@@ -319,7 +319,7 @@ get_encryption_pass() {
             --title "Encryption Password" \
             --passwordbox "\\nPlease retype the password to unlock the encrypted drive." \
             --nocancel \
-            25 78 \
+            10 60 \
             3>&1 1>&2 2>&3 3>&1
         )
     done
