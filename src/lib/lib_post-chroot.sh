@@ -379,7 +379,7 @@ run_git-clone() {
 vimplugininstall() {
     # Installs vim plugins.
     whiptail --infobox "Installing \`vim\` plugins..." 7 60
-    sudo -u "$username" mkdir -p "/home/$name/.vim/autoload"
+    sudo -u "$username" mkdir -p "/home/${username}/.vim/autoload"
     curl -Ls "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" >  "/home/${username}/.vim/autoload/plug.vim"
     sudo -u "$username" vim -c "PlugInstall|q|q"
 }
