@@ -759,7 +759,7 @@ playbook_post_chroot() {
 
     cd "/root/.local/src/${post_chroot_path}"
 
-    [ "$graphical_enviroment" != "server" ] \
+    [ "$graphical_environment" != "server" ] \
         && {
             bash src/graphical-environments.sh \
                 || error "Failed when installing the graphical environment."
