@@ -160,13 +160,13 @@ arch_aur_install() {
 }
 
 #####################################################################
-# VARIABLES - DEBIAN-SETUP
+# VARIABLES
 #####################################################################
 
-list_packages="https://raw.githubusercontent.com/DavidVogelxyz/debian-setup/master/packages.csv"
+list_packages="https://raw.githubusercontent.com/DavidVogelxyz/linux-image-setup/master/src/packages/packages_base.csv"
 
 #####################################################################
-# FUNCTIONS - DEBIAN-SETUP
+# FUNCTIONS
 #####################################################################
 
 # prints argument to STDERR and exits
@@ -176,7 +176,7 @@ error() {
 }
 
 #####################################################################
-# FUNCTIONS - DEBIAN-SETUP - ADD_USER_AND_PASS
+# FUNCTIONS - ADD_USER_AND_PASS
 #####################################################################
 
 add_user_and_pass() {
@@ -210,7 +210,7 @@ add_user_and_pass() {
 }
 
 #####################################################################
-# FUNCTIONS - DEBIAN-SETUP - DO_BASIC_ADJUSTMENTS
+# FUNCTIONS - DO_BASIC_ADJUSTMENTS
 #####################################################################
 
 do_basic_adjustments() {

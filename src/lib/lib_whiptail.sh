@@ -345,7 +345,7 @@ get_partition_info() {
 }
 
 #####################################################################
-# FUNCTIONS - DEBIAN-SETUP - GET_USER_AND_PASS
+# FUNCTIONS - GET_USER_AND_PASS
 #####################################################################
 
 ask_root_pass() {
@@ -470,7 +470,7 @@ get_user_and_pass() {
 }
 
 #####################################################################
-# FUNCTIONS - DEBIAN-SETUP - GET_NETWORKING_INFO
+# FUNCTIONS - GET_NETWORKING_INFO
 #####################################################################
 
 ask_hostname() {
@@ -521,7 +521,7 @@ get_networking_info() {
 }
 
 #####################################################################
-# FUNCTIONS - DEBIAN-SETUP - QUESTIONS
+# FUNCTIONS - QUESTIONS
 #####################################################################
 
 ask_timezone() {
