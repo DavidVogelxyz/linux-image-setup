@@ -273,9 +273,9 @@ fix_dwm() {
 
     enable_dwm_autologin
 
-    check_pkgmgr_pacman \
-        && [ ! -f "/home/${username}/.config/nvim/autoload/plug.vim" ] \
-        && nvimplugininstall
+    #check_pkgmgr_pacman \
+        #&& [ ! -f "/home/${username}/.config/nvim/autoload/plug.vim" ] \
+        #&& nvimplugininstall
 
     check_pkgmgr_pacman \
         && larbs_fixes
