@@ -138,6 +138,18 @@ run_pre_debootstrap() {
         && apt install -y debootstrap git vim > /dev/null 2>&1
 }
 
+bind_mounts() {
+    whiptail \
+        --title "Bind Mounts" \
+        --infobox "Binding certain devices to the chroot environment..." \
+        8 78
+
+    for d in sys dev proc; do
+        mount --rbind /$d /mnt/$d \
+            && mount --make-rslave /mnt/$d
+    done
+}
+
 chroot_debootstrap_prelude() {
     repodir="/root/.local/src"
     export post_chroot_path="linux-image-setup"
