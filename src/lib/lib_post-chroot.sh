@@ -385,6 +385,8 @@ vimplugininstall() {
 }
 
 doconfigs() {
+    curr_dir="$(pwd)"
+
     whiptail \
         --infobox "Performing some basic configurations..." \
         9 70
@@ -421,7 +423,7 @@ doconfigs() {
     # stow
     cd "/home/$username/.dotfiles" \
         && stow . \
-        && cd \
+        && cd "$curr_dir" \
         && unlink "/home/$username/.xprofile" # this is true only for servers; should not be done on DWM machines
 
     # all systems
